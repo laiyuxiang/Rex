@@ -12,6 +12,8 @@ class Rex_View
      */
     public $file;
 
+    protected $tVar     =   array();
+
     /**
      * Constructor
      *
@@ -36,6 +38,13 @@ class Rex_View
         return ob_get_clean();
     }
 
+    public function assign($name,$value){
+        if(is_array($name)) {
+            $this->tVar   =  array_merge($this->tVar,$name);
+        }else {
+            $this->tVar[$name] = $value;
+        }
+    }
     /**
      * Display
      *
@@ -44,6 +53,12 @@ class Rex_View
      */
     public function display()
     {
+        if(!is_null($this->tVar)){
+            extract($this->tVar, EXTR_OVERWRITE);
+        }
+        //$content = preg_replace_callback('/('.$this->config['tmpl_begin'].')([^\d\w\s'.$this->config['tmpl_begin'].$this->config['tmpl_end'].'].+?)('.$this->config['tmpl_end'].')/is', array($this, 'parseTag'),$content);
+
+
         include_once './'.$this->file;
     }
 

@@ -72,6 +72,10 @@ abstract class Rex_Controller
         $this->view->display();
     }
 
+    protected function assign($name,$value=''){
+        $this->view->assign($name,$value);
+    }
+
     /**
      * Get default template file path
      *
